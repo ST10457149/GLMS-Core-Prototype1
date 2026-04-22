@@ -1,0 +1,13 @@
+﻿@model GLMS_Core_Prototype.Models.ServiceRequest
+@{
+    ViewData["Title"] = "Service Request Details";
+    Layout = "_Layout";
+}
+
+<h2>Service Request Details</h2>
+<p>Description: @Model.Description</p>
+<p>Cost (USD): @Model.CostUSD</p>
+<p>Cost (ZAR): @Model.CostZAR</p>
+<p>Status: @Model.Status</p>
+<a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@Model.ServiceRequestId">Edit</a>
+<a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.ServiceRequestId">Delete</a>

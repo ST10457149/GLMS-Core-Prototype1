@@ -1,0 +1,32 @@
+﻿@model GLMS_Core_Prototype.Models.Contract
+@{
+    ViewData["Title"] = "Contract Details";
+    Layout = "_Layout";
+}
+
+<h2>Contract Details</h2>
+<p>Client: @(Model.Client?.Name ?? Model.ClientId.ToString())</p>
+<p>Start Date: @Model.StartDate.ToShortDateString()</p>
+<p>End Date: @Model.EndDate.ToShortDateString()</p>
+<p>Region: @Model.Region</p>
+<p>Service Level: @Model.ServiceLevel</p>
+<p>Status: @Model.Status</p>
+@if (TempData["AgreementUploadError"] is string error)
+{
+    <p class="text-danger">@error</p>
+}
+@if (!string.IsNullOrEmpty(Model.SignedAgreementPath))
+{
+    <a href="@Url.Content(Model.SignedAgreementPath)" download>Download Agreement</a>
+}
+else
+{
+    <p>No signed agreement uploaded.</p>
+}
+<form asp-action="UploadAgreement" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="@Model.ContractId" />
+    <input type="file" name="file" accept="application/pdf" />
+    <button type="submit">Upload PDF</button>
+</form>
+<a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@Model.ContractId">Edit</a>
+<a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.ContractId">Delete</a>

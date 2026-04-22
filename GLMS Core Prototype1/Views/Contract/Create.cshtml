@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model GLMS_Core_Prototype.Models.Contract
+@{
+    ViewData["Title"] = "Create Contract";
+    Layout = "_Layout";
+}
+
+<h2>Create Contract</h2>
+@if (TempData["AgreementUploadError"] is string error)
+{
+    <p class="text-danger">@error</p>
+}
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
+    <label>Client</label>
+    <select asp-for="ClientId" asp-items="@(ViewData["Clients"] as SelectList)"></select>
+    <span asp-validation-for="ClientId"></span>
+    <label>Start Date</label><input asp-for="StartDate" type="date" />
+    <span asp-validation-for="StartDate"></span>
+    <label>End Date</label><input asp-for="EndDate" type="date" />
+    <span asp-validation-for="EndDate"></span>
+    <label>Region</label><input asp-for="Region" />
+    <span asp-validation-for="Region"></span>
+    <label>Service Level</label><input asp-for="ServiceLevel" />
+    <span asp-validation-for="ServiceLevel"></span>
+    <label>Status</label>
+    <select asp-for="Status" asp-items="Html.GetEnumSelectList<GLMS_Core_Prototype.Models.ContractStatus>()"></select>
+    <span asp-validation-for="Status"></span>
+    <label>Signed Agreement (PDF)</label>
+    <input type="file" name="signedAgreement" accept="application/pdf" />
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

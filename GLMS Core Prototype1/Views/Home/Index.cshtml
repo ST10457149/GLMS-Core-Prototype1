@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Use this portal to manage clients, contracts, and service requests in one place.</p>
+    <p>Start by adding a client, then create contracts and track service requests with automatic currency conversion.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <h3 class="card-title">Clients</h3>
+                <p class="card-text">Manage client profiles, contact details, and regions.</p>
+                <a class="btn btn-primary" asp-controller="Client" asp-action="Index">Go to Clients</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <h3 class="card-title">Contracts</h3>
+                <p class="card-text">Create contracts, upload agreements, and track status.</p>
+                <a class="btn btn-primary" asp-controller="Contract" asp-action="Index">Go to Contracts</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <h3 class="card-title">Service Requests</h3>
+                <p class="card-text">Log service requests with live USD to ZAR conversion.</p>
+                <a class="btn btn-primary" asp-controller="ServiceRequest" asp-action="Index">Go to Service Requests</a>
+            </div>
+        </div>
+    </div>
+</div>

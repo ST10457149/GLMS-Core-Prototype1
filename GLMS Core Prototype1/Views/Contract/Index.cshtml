@@ -1,0 +1,72 @@
+@using System
+@model IEnumerable<GLMS_Core_Prototype.Models.Contract>
+@{
+    ViewData["Title"] = "Contracts";
+    Layout = "_Layout";
+}
+
+<h2>Contracts</h2>
+
+<a asp-action="Create">Add New Contract</a>
+
+<form method="get">
+    <label>Date</label>
+    <input type="date" name="date" value="@ViewData["FilterDate"]" />
+
+    <label>Range Start</label>
+    <input type="date" name="startDate" value="@ViewData["FilterStartDate"]" />
+
+    <label>Range End</label>
+    <input type="date" name="endDate" value="@ViewData["FilterEndDate"]" />
+
+    <label>Status</label>
+    <select name="status">
+        <option value="">All</option>
+        @foreach (var item in Html.GetEnumSelectList<GLMS_Core_Prototype.Models.ContractStatus>())
+        {
+            if (string.Equals(item.Value, ViewData["FilterStatus"]?.ToString(), StringComparison.OrdinalIgnoreCase))
+            {
+                <option value="@item.Value" selected>@item.Text</option>
+            }
+            else
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        }
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Contact</th>
+            <th>Agreement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contract in Model)
+        {
+            <tr>
+                <td>@(contract.Client?.Name ?? contract.ClientId.ToString())</td>
+                <td>@contract.Region</td>
+                <td>@contract.Client?.ContactDetails</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(contract.SignedAgreementPath))
+                    {
+                        <a href="@Url.Content(contract.SignedAgreementPath)" download>Download</a>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@contract.ContractId">Details</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@contract.ContractId">Edit</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@contract.ContractId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

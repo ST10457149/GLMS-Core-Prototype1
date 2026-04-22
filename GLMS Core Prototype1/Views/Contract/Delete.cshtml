@@ -1,0 +1,13 @@
+﻿@model GLMS_Core_Prototype.Models.Contract
+@{
+    ViewData["Title"] = "Delete Contract";
+    Layout = "_Layout";
+}
+
+<h2>Delete Contract</h2>
+<p>Are you sure you want to delete this contract?</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="ContractId" />
+    <button type="submit">Delete</button>
+    <a asp-action="Details" asp-route-id="@Model.ContractId">Cancel</a>
+</form>

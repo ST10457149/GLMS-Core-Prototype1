@@ -1,0 +1,21 @@
+﻿@model GLMS_Core_Prototype.Models.Client
+@{
+    ViewData["Title"] = "Create Client";
+    Layout = "_Layout";
+}
+
+<h2>Create Client</h2>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <label>Name</label><input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+    <label>Contact Details</label><input asp-for="ContactDetails" />
+    <span asp-validation-for="ContactDetails"></span>
+    <label>Region</label><input asp-for="Region" />
+    <span asp-validation-for="Region"></span>
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

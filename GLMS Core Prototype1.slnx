@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GLMS Core Prototype1.Tests/GLMS Core Prototype1.Tests.csproj" />
+  <Project Path="GLMS Core Prototype1/GLMS Core Prototype1.csproj" />
+</Solution>

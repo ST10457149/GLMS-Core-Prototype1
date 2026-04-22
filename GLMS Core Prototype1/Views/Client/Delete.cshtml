@@ -1,0 +1,13 @@
+﻿@model GLMS_Core_Prototype.Models.Client
+@{
+    ViewData["Title"] = "Delete Client";
+    Layout = "_Layout";
+}
+
+<h2>Delete Client</h2>
+<p>Are you sure you want to delete @Model.Name?</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="ClientId" />
+    <button type="submit">Delete</button>
+    <a asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,71 @@
+﻿@model GLMS_Core_Prototype.Models.ServiceRequest
+@{
+    ViewData["Title"] = "Create Service Request";
+    Layout = "_Layout";
+}
+
+<h2>Create Service Request</h2>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    @if (ViewData["Contracts"] is IEnumerable<dynamic> contracts)
+    {
+        <label>Contract</label>
+        <select asp-for="ContractId" asp-items="@(new SelectList(contracts, "ContractId", "Display"))"></select>
+        <span asp-validation-for="ContractId"></span>
+    }
+    else
+    {
+        <input type="hidden" asp-for="ContractId" />
+    }
+    <label>Description</label><input asp-for="Description" />
+    <span asp-validation-for="Description"></span>
+    <label>Cost (USD)</label><input asp-for="CostUSD" id="costUsd" />
+    <span asp-validation-for="CostUSD"></span>
+    <label>Estimated Cost (ZAR)</label><input id="costZar" readonly />
+    <input type="hidden" asp-for="CostZAR" id="costZarValue" />
+    <select asp-for="Status" asp-items="Html.GetEnumSelectList<GLMS_Core_Prototype.Models.RequestStatus>()"></select>
+    <span asp-validation-for="Status"></span>
+    <button type="submit">Save</button>
+</form>
+
+<script>
+    const costUsdInput = document.getElementById('costUsd');
+    const costZarInput = document.getElementById('costZar');
+    const costZarValueInput = document.getElementById('costZarValue');
+    let currentRate = null;
+
+    const fetchRate = async () => {
+        const response = await fetch('@Url.Action("UsdToZarRate", "ServiceRequest")');
+        if (!response.ok) {
+            currentRate = null;
+            return;
+        }
+
+        const data = await response.json();
+        currentRate = data.rate;
+    };
+
+    const updateZar = async () => {
+        if (!currentRate) {
+            await fetchRate();
+        }
+
+        const usd = parseFloat(costUsdInput.value);
+        if (!Number.isNaN(usd) && typeof currentRate === 'number') {
+            const zar = usd * currentRate;
+            costZarInput.value = zar.toFixed(2);
+            costZarValueInput.value = zar.toFixed(2);
+        } else {
+            costZarInput.value = '';
+            costZarValueInput.value = '';
+        }
+    };
+
+    if (costUsdInput && costZarInput && costZarValueInput) {
+        costUsdInput.addEventListener('input', updateZar);
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,35 @@
+@model IEnumerable<GLMS_Core_Prototype.Models.ServiceRequest>
+@{
+    ViewData["Title"] = "Service Requests";
+    Layout = "_Layout";
+}
+
+<h2>Service Requests</h2>
+
+<a asp-action="Create">Add New Service Request</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.Contract?.Client?.Name</td>
+                <td>@request.Contract?.Region</td>
+                <td>@request.Contract?.Client?.ContactDetails</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@request.ServiceRequestId">Details</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@request.ServiceRequestId">Edit</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@request.ServiceRequestId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
